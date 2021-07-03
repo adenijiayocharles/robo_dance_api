@@ -26,7 +26,12 @@ class AuthenticationController extends Controller
         // generate json token
         $token = JWTAuth::fromUser($manager);
 
-        return $this->sendResponse('Account created successfully', ["manager" => new ManagerResource($manager), "auth_token" => $token]);
+        return $this->sendResponse('Account created successfully', 
+            [
+                "manager" => new ManagerResource($manager), 
+                "auth_token" => $token
+            ]
+        );
     }
 
 
@@ -43,7 +48,11 @@ class AuthenticationController extends Controller
             if (!$token) {
                 return $this->sendError('Invalid credentials');
             }
-            return $this->sendResponse('Login successful', ['auth_token' => $token]);
+            return $this->sendResponse('Login successful', 
+                [
+                    'auth_token' => $token
+                ]
+            );
         } catch (JWTException $e) {
             return $this->sendError('Unable to generate auth token');
         }
