@@ -6,7 +6,9 @@ use App\Models\Manager;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Resources\ManagerResource;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\LoginManagerRequest;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use App\Http\Requests\RegisterManagerRequest;
 
 class AuthenticationController extends Controller
 {
@@ -16,26 +18,34 @@ class AuthenticationController extends Controller
      * @param   Request  $request
      * @return  json
      */
-    public function register(Request $request)
+    public function register(RegisterManagerRequest $request)
     {
-        // validates incoming data including making sure
-        // that email address is unique
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|between:3,100',
-            'email' => 'required|string|email|max:100|unique:managers',
-            'password' => 'required|string|confirmed|min:6',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Invalid request', $validator->errors());
-        }
-
         // store manager information in the database
-        $manager = Manager::create($validator->validated());
+        $manager = Manager::create($request->validated());
 
         // generate json token
         $token = JWTAuth::fromUser($manager);
 
         return $this->sendResponse('Account created successfully', ["manager" => new ManagerResource($manager), "auth_token" => $token]);
+    }
+
+
+    /**
+     * Verifies user credentials and generates JWT
+     *
+     * @param   LoginManagerRequest  $request  [$request description]
+     * @return  json
+     */
+    public function login(LoginManagerRequest $request)
+    {
+        try {
+            $token = JWTAuth::attempt($request->validated());
+            if (!$token) {
+                return $this->sendError('Invalid credentials');
+            }
+            return $this->sendResponse('Login successful', ['auth_token' => $token]);
+        } catch (JWTException $e) {
+            return $this->sendError('Unable to generate auth token');
+        }
     }
 }
