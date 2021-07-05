@@ -74,4 +74,9 @@ class Manager extends Authenticatable implements JWTSubject
     {
         $this->attributes['password'] = Hash::make($value);
     }
+
+    public function teams()
+    {
+        return $this->hasMany('App\Team');
+    }
 }
