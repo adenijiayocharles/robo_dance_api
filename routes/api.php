@@ -26,5 +26,6 @@ Route::group(['prefix' => 'auth'], function ($router) {
 });
 
 Route::group(['middleware' => 'jwt.verify', 'prefix' => 'team'], function ($router) {
-    Route::post('/', [TeamController::class, 'create']);
+    Route::post('/', [TeamController::class, 'createTeam']);
+    Route::post('/member', [TeamController::class, 'createTeamMember']);
 });

@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateTeamRequest;
 use App\Models\Team;
-use Illuminate\Http\Request;
+use App\Http\Traits\Response;
+use App\Http\Requests\CreateTeamRequest;
+use App\Http\Resources\TeamResource;
 
 class TeamController extends Controller
 {
-
-    public function create(CreateTeamRequest $request){
-        Team::create([
+    use Response;
+    public function createTeam(CreateTeamRequest $request)
+    {
+        $team = Team::create([
             "name" => $request->input('name'),
             "manager_id" => auth()->user()->id
         ]);
-        return auth()->user()->id;
+        return $this->sendResponse('Team created successfully', [
+            "team" => new TeamResource($team)
+        ]);
     }
 }
