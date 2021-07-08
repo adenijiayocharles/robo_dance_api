@@ -16,6 +16,11 @@ class Team extends Model
 
     public function manager()
     {
-        return $this->belongsTo('App\Manager');
+        return $this->belongsTo(Manager::class);
+    }
+
+    public function robots()
+    {
+        return $this->belongsToMany(Robot::class);
     }
 }

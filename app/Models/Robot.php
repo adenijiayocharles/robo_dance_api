@@ -18,8 +18,18 @@ class Robot extends Model
         'avatar'
     ];
 
+    public function getOutOfOrderAttribute($value)
+    {
+        return !$value ? false : true;
+    }
+
     public function manager()
     {
-        return $this->belongsTo('App\Manager');
+        return $this->belongsTo(Manager::class);
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
     }
 }

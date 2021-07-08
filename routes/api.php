@@ -28,6 +28,8 @@ Route::group(['prefix' => 'auth'], function ($router) {
 
 Route::group(['middleware' => 'jwt.verify', 'prefix' => 'teams'], function ($router) {
     Route::post('/', [TeamController::class, 'createTeam']);
+    Route::post('/robot', [TeamController::class, 'addRobotToTeam']);
+    Route::get('/robot/{team_id}', [TeamController::class, 'getTeamMembers']);
 });
 
 Route::group(['middleware' => 'jwt.verify', 'prefix' => 'robots/'], function ($router) {
