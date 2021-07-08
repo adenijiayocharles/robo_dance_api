@@ -67,7 +67,7 @@ class RobotController extends Controller
         $robots = Robot::where("manager_id", auth()->user()->id)->get();
 
         if (!$robots->count()) {
-            return $this->sendError("Robots not found", [], 404);
+            return $this->sendResponse("Robots not found", [], 404);
         }
         return $this->sendResponse(
             "Robot fetched successfully",
