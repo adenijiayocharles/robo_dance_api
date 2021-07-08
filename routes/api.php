@@ -2,8 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\RobotController;
+use App\Http\Controllers\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,12 @@ Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('/login', [AuthenticationController::class, 'login']);
 });
 
-Route::group(['middleware' => 'jwt.verify', 'prefix' => 'team'], function ($router) {
+Route::group(['middleware' => 'jwt.verify', 'prefix' => 'teams'], function ($router) {
     Route::post('/', [TeamController::class, 'createTeam']);
-    Route::post('/member', [TeamController::class, 'createTeamMember']);
+});
+
+Route::group(['middleware' => 'jwt.verify', 'prefix' => 'robots/'], function ($router) {
+    Route::post('/', [RobotController::class, 'create']);
+    Route::get('/{id}', [RobotController::class, 'getSingleRobot']);
+    Route::get('/', [RobotController::class, 'getAllRobots']);
 });
