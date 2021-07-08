@@ -9,9 +9,11 @@ use App\Http\Resources\ManagerResource;
 use App\Http\Requests\LoginManagerRequest;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Requests\RegisterManagerRequest;
+use App\Http\Traits\Response;
 
 class AuthenticationController extends Controller
 {
+    use Response;
     /**
      * Creates a new team manager account
      *
@@ -26,9 +28,9 @@ class AuthenticationController extends Controller
         // generate json token
         $token = JWTAuth::fromUser($manager);
 
-        return $this->sendResponse('Account created successfully', 
+        return $this->sendResponse('Account created successfully',
             [
-                "manager" => new ManagerResource($manager), 
+                "manager" => new ManagerResource($manager),
                 "auth_token" => $token
             ]
         );
@@ -48,7 +50,7 @@ class AuthenticationController extends Controller
             if (!$token) {
                 return $this->sendError('Invalid credentials');
             }
-            return $this->sendResponse('Login successful', 
+            return $this->sendResponse('Login successful',
                 [
                     'auth_token' => $token
                 ]
