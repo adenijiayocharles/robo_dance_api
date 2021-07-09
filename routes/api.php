@@ -39,6 +39,8 @@ Route::group(['middleware' => 'jwt.verify', 'prefix' => 'robots'], function ($ro
     Route::get('/', [RobotController::class, 'getAllRobots']);
 });
 
-Route::group(['prefix' => 'danceoffs'], function ($router) {
+Route::group(['middleware' => 'jwt.verify', 'prefix' => 'danceoffs'], function ($router) {
     Route::post('/', [DanceoffController::class, 'create']);
+    Route::get('/{danceoff_id}', [DanceoffController::class, 'getDanceoffContestants']);
+    Route::get('/leaderboard/{danceoff_id}', [DanceoffController::class, 'getDanceoffLeaderboard']);
 });

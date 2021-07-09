@@ -20,4 +20,14 @@ class Danceoff extends Model
     {
         return $this->belongsTo(Team::class, "team_two");
     }
+
+    public function contestants()
+    {
+        return $this->hasMany(DanceoffTeam::class, 'danceoff_id');
+    }
+
+    public function winners()
+    {
+        return $this->hasMany(DanceoffTeam::class, 'danceoff_id');
+    }
 }
