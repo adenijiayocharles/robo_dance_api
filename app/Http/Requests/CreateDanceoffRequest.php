@@ -37,8 +37,8 @@ class CreateDanceoffRequest extends FormRequest
     public function messages()
     {
         return [
-            'team_one.required' => 'Team one id is required',
-            'team_two.required' => 'Team two id is required',
+            "team_one.required" => "Team one id is required",
+            "team_two.required" => "Team two id is required",
         ];
     }
 }

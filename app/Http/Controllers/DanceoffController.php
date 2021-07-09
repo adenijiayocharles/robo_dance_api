@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Team;
 use App\Models\Danceoff;
 use App\Models\RobotTeam;
-use Illuminate\Support\Arr;
 use App\Models\DanceoffTeam;
-use Illuminate\Http\Request;
 use App\Http\Traits\Response;
 use App\Http\Requests\CreateDanceoffRequest;
 use App\Http\Resources\DanceOffTeamCollection;
@@ -27,9 +25,9 @@ class DanceoffController extends Controller
     {
         //check to see if ongoing danceoff between both teams exists
         $isOngoingDanceOff = Danceoff::where([
-            'team_one' => $request->input('team_one'),
-            'team_two' => $request->input('team_two'),
-            'isComplete' => 0
+            "team_one" => $request->input("team_one"),
+            "team_two" => $request->input("team_two"),
+            "isComplete" => 0
         ])->first();
 
         if ($isOngoingDanceOff) {
@@ -37,22 +35,22 @@ class DanceoffController extends Controller
         }
 
         // check if team one exists
-        if (is_null(Team::where('id', $request->input('team_one'))->first())) {
+        if (is_null(Team::where("id", $request->input("team_one"))->first())) {
             return $this->sendError("Team one does not exists");
         }
         // check if team two exists
-        if (is_null(Team::where('id', $request->input('team_two'))->first())) {
+        if (is_null(Team::where("id", $request->input("team_two"))->first())) {
             return $this->sendError("Team two does not exists");
         }
 
         // check if team one has upto five members
-        $teamOne = RobotTeam::where('team_id', $request->input('team_one'))->pluck('robot_id')->toArray();
+        $teamOne = RobotTeam::where("team_id", $request->input("team_one"))->pluck("robot_id")->toArray();
         if (count($teamOne) < 5) {
             return $this->sendError("Team one must have upto 5 members");
         }
 
         // check if team two has upto five members
-        $teamTwo = RobotTeam::where('team_id', $request->input('team_two'))->pluck('robot_id')->toArray();
+        $teamTwo = RobotTeam::where("team_id", $request->input("team_two"))->pluck("robot_id")->toArray();
         if (count($teamTwo) < 5) {
             return $this->sendError("Team two must have upto 5 members");
         }
@@ -73,14 +71,14 @@ class DanceoffController extends Controller
 
         foreach ($contestants as $key => $contestant) {
             DanceoffTeam::create([
-                'danceoff_id' => $danceOff->id,
-                'contestant_one_id' => $contestant[0],
-                'contestant_two_id' => $contestant[1],
+                "danceoff_id" => $danceOff->id,
+                "contestant_one_id" => $contestant[0],
+                "contestant_two_id" => $contestant[1],
             ]);
         }
 
-        return $this->sendResponse('Dance off has started', [
-            'danceoff' => $danceOff
+        return $this->sendResponse("Dance off has started", [
+            "danceoff" => $danceOff
         ]);
     }
 
@@ -88,7 +86,7 @@ class DanceoffController extends Controller
     {
         try {
             $danceOffs = Danceoff::where("id", $danceoff_id)->firstOrFail();
-            return $this->sendResponse('Danceoff Found', new DanceOffTeamCollection($danceOffs->contestants));
+            return $this->sendResponse("Danceoff Found", new DanceOffTeamCollection($danceOffs->contestants));
         } catch (ModelNotFoundException $e) {
             return $this->sendError("Dance off not found", [], 404);
         }
@@ -98,7 +96,7 @@ class DanceoffController extends Controller
     {
         try {
             $danceOffs = Danceoff::where("id", $danceoff_id)->firstOrFail();
-            return $this->sendResponse('Danceoff Found', new DanceOffLeaderboardCollection($danceOffs->contestants));
+            return $this->sendResponse("Danceoff Found", new DanceOffLeaderboardCollection($danceOffs->contestants));
         } catch (ModelNotFoundException $e) {
             return $this->sendError("Dance off not found", [], 404);
         }

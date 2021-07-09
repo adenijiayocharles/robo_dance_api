@@ -16,12 +16,12 @@ class DanceOffTeamCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'contestants' => $this->collection->transform(function ($danceoffs) {
+            "contestants" => $this->collection->transform(function ($danceoffs) {
                 return [
-                    'id' => $danceoffs->id,
-                    // 'contestant_one' => new RobotResource($danceoffs->contestantOne),
-                    // 'contestant_two' => new RobotResource($danceoffs->contestantTwo),
-                    'winner' => is_null($danceoffs->winner) ? null : new RobotResource(Robot::where('id', $danceoffs->winner)->first()),
+                    "id" => $danceoffs->id,
+                    "contestant_one" => new RobotResource($danceoffs->contestantOne),
+                    "contestant_two" => new RobotResource($danceoffs->contestantTwo),
+                    "winner" => is_null($danceoffs->winner) ? null : new RobotResource(Robot::where("id", $danceoffs->winner)->first()),
                 ];
             }),
         ];

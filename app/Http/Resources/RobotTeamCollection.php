@@ -15,10 +15,10 @@ class RobotTeamCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => $this->collection->transform(function ($robot_team) {
+            "data" => $this->collection->transform(function ($robot_team) {
                 return [
-                    'id' => $robot_team->id,
-                    'robot' => new RobotResource($robot_team->robot)
+                    "id" => $robot_team->id,
+                    "robot" => new RobotResource($robot_team->robot)
                 ];
             }),
         ];

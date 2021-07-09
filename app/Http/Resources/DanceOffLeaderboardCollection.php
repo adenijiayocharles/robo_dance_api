@@ -16,10 +16,10 @@ class DanceOffLeaderboardCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'contestants' => $this->collection->transform(function ($danceoffs) {
+            "contestants" => $this->collection->transform(function ($danceoffs) {
                 return [
-                    'id' => $danceoffs->id,
-                    'winner' => is_null($danceoffs->winner) ? null : new RobotResource(Robot::where('id', $danceoffs->winner)->first()),
+                    "id" => $danceoffs->id,
+                    "winner" => is_null($danceoffs->winner) ? null : new RobotResource(Robot::where("id", $danceoffs->winner)->first()),
                 ];
             }),
         ];

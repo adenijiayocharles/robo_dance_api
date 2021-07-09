@@ -24,8 +24,8 @@ class LoginManagerRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|string|email|max:100',
-            'password' => 'required|string',
+            "email" => "required|string|email|max:100",
+            "password" => "required|string",
         ];
     }
 
@@ -37,8 +37,8 @@ class LoginManagerRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'The email field is required',
-            'password.required' => 'The password field is required',
+            "email.required" => "The email field is required",
+            "password.required" => "The password field is required",
         ];
     }
 }

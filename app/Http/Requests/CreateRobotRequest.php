@@ -31,17 +31,4 @@ class CreateRobotRequest extends FormRequest
             "avatar" => "url|required",
         ];
     }
-
-    /**
-     * Get the error messages for the defined validation rules.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'email.required' => 'The email field is required',
-            'experience.required' => 'Please add the robot\'s experience level',
-        ];
-    }
 }

@@ -19,10 +19,10 @@ class TeamController extends Controller
     public function createTeam(CreateTeamRequest $request)
     {
         $team = Team::create([
-            "name" => $request->input('name'),
+            "name" => $request->input("name"),
             "manager_id" => auth()->user()->id
         ]);
-        return $this->sendResponse('Team created successfully', [
+        return $this->sendResponse("Team created successfully", [
             "team" => new TeamResource($team)
         ]);
     }
@@ -30,46 +30,46 @@ class TeamController extends Controller
     public function addRobotToTeam(Request $request)
     {
         // check if team already has three members
-        $count = RobotTeam::where(["team_id" => $request->input('team_id'), "manager_id" => auth()->user()->id])->count();
+        $count = RobotTeam::where(["team_id" => $request->input("team_id"), "manager_id" => auth()->user()->id])->count();
         if ($count === 5) {
-            return $this->sendError('Unable to add new member to this team has limit of 5 robot members has been reached');
+            return $this->sendError("Unable to add new member to this team has limit of 5 robot members has been reached");
         }
 
         //check if robot exists
-        if (is_null(Robot::where('id', $request->input('robot_id'))->first())) {
-            return $this->sendError('Robot does not exists');
+        if (is_null(Robot::where("id", $request->input("robot_id"))->first())) {
+            return $this->sendError("Robot does not exists");
         }
 
         //check if team exists
-        if (is_null(Team::where('id', $request->input('team_id'))->first())) {
-            return $this->sendError('Team does not exists');
+        if (is_null(Team::where("id", $request->input("team_id"))->first())) {
+            return $this->sendError("Team does not exists");
         }
 
         // check if robot is a member of team already
         $check = RobotTeam::where([
-            "team_id" => $request->input('team_id'),
-            "robot_id" => $request->input('robot_id'),
+            "team_id" => $request->input("team_id"),
+            "robot_id" => $request->input("robot_id"),
             "manager_id" => auth()->user()->id
         ])->first();
 
         if (!is_null($check)) {
-            return $this->sendError('Robot is already a member of this team');
+            return $this->sendError("Robot is already a member of this team");
         }
 
         // store tobot-team relationship in the database
         RobotTeam::create([
-            "team_id" => $request->input('team_id'),
-            "robot_id" => $request->input('robot_id'),
+            "team_id" => $request->input("team_id"),
+            "robot_id" => $request->input("robot_id"),
             "manager_id" => auth()->user()->id
         ]);
-        return $this->sendResponse('Robot added to team successfully.');
+        return $this->sendResponse("Robot added to team successfully.");
     }
 
     public function getTeamMembers($team_id)
     {
         try {
-            $results = Team::where('id', $team_id)->firstOrFail();
-            return $this->sendResponse('Team found', [
+            $results = Team::where("id", $team_id)->firstOrFail();
+            return $this->sendResponse("Team found", [
                 "team_details" => $results->name,
                 "members" => new RobotCollection($results->robots)
             ]);

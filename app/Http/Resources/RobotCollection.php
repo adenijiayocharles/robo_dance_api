@@ -15,7 +15,7 @@ class RobotCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'robots' => $this->collection,
+            "robots" => $this->collection,
         ];
     }
 }

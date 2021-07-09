@@ -24,9 +24,9 @@ class RegisterManagerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|between:3,100',
-            'email' => 'required|string|email|max:100|unique:managers',
-            'password' => 'required|string|confirmed|min:6',
+            "name" => "required|string|between:3,100",
+            "email" => "required|string|email|max:100|unique:managers",
+            "password" => "required|string|confirmed|min:6",
         ];
     }
 
@@ -38,7 +38,7 @@ class RegisterManagerRequest extends FormRequest
     public function messages()
     {
         return [
-            'password.confirmed' => 'The passwords do not match',
+            "password.confirmed" => "The passwords do not match",
         ];
     }
 }
