@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\RobotController;
+use App\Http\Controllers\DanceoffController;
 use App\Http\Controllers\AuthenticationController;
 
 /*
@@ -32,8 +33,14 @@ Route::group(['middleware' => 'jwt.verify', 'prefix' => 'teams'], function ($rou
     Route::get('/robot/{team_id}', [TeamController::class, 'getTeamMembers']);
 });
 
-Route::group(['middleware' => 'jwt.verify', 'prefix' => 'robots/'], function ($router) {
+Route::group(['middleware' => 'jwt.verify', 'prefix' => 'robots'], function ($router) {
     Route::post('/', [RobotController::class, 'create']);
     Route::get('/{id}', [RobotController::class, 'getSingleRobot']);
     Route::get('/', [RobotController::class, 'getAllRobots']);
+});
+
+Route::group(['middleware' => 'jwt.verify', 'prefix' => 'danceoffs'], function ($router) {
+    Route::post('/', [DanceoffController::class, 'create']);
+    Route::get('/{danceoff_id}', [DanceoffController::class, 'getDanceoffContestants']);
+    Route::get('/leaderboard/{danceoff_id}', [DanceoffController::class, 'getDanceoffLeaderboard']);
 });
