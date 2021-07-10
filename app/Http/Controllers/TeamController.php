@@ -62,7 +62,7 @@ class TeamController extends Controller
             "robot_id" => $request->input("robot_id"),
             "manager_id" => auth()->user()->id
         ]);
-        return $this->sendResponse("Robot added to team successfully.");
+        return $this->sendResponse("Robot added to team successfully.", [], 201);
     }
 
     public function getTeamMembers($team_id)
