@@ -33,7 +33,8 @@ class AuthenticationController extends Controller
             [
                 "manager" => new ManagerResource($manager),
                 "auth_token" => $token
-            ]
+            ],
+            201
         );
     }
 

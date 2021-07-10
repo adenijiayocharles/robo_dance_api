@@ -79,7 +79,7 @@ class DanceoffController extends Controller
 
         return $this->sendResponse("Dance off has started", [
             "danceoff" => $danceOff
-        ]);
+        ], 201);
     }
 
     public function getDanceoffContestants($danceoff_id)

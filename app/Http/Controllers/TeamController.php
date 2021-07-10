@@ -24,7 +24,7 @@ class TeamController extends Controller
         ]);
         return $this->sendResponse("Team created successfully", [
             "team" => new TeamResource($team)
-        ]);
+        ], 201);
     }
 
     public function addRobotToTeam(Request $request)
