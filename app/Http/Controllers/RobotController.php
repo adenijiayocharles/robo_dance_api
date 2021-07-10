@@ -37,7 +37,7 @@ class RobotController extends Controller
 
         return $this->sendResponse("Robot created successfully", [
             "robot" => new RobotResource($robot)
-        ]);
+        ], 201);
     }
 
     /**
