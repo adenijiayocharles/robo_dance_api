@@ -9,9 +9,10 @@ To run this application, do the following
 -   run php artisan serve to launch application
 
 ##### API documentation
+-  [Click here to view the API documentation](https://adenijiayocharles.gitbook.io/robo-dance-api/).
 
--   [Powered by Gitbook](https://adenijiayocharles.gitbook.io/robo-dance-api/).
+##### API documentation
+-  https://robo-dance-api.herokuapp.com/api
 
 ##### Test
-
 -   run "composer test"
