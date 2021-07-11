@@ -82,6 +82,13 @@ class DanceoffController extends Controller
         ], 201);
     }
 
+    /**
+     * Get the contestants in a dance off
+     *
+     * @param   [integer]  $danceoff_id  id of the dance-off
+     *
+     * @return  json
+     */
     public function getDanceoffContestants($danceoff_id)
     {
         try {
@@ -92,6 +99,13 @@ class DanceoffController extends Controller
         }
     }
 
+    /**
+     * Get the leaderboard {winners} in a danceoff
+     *
+     * @param   [integer]  $danceoff_id  id of the dance-off
+     *
+     * @return  json
+     */
     public function getDanceoffLeaderboard($danceoff_id)
     {
         try {

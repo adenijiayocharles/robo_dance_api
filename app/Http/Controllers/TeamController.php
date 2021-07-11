@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddRobotToTeamRequest;
 use App\Models\Team;
 use App\Models\RobotTeam;
 use Illuminate\Http\Request;
@@ -16,6 +17,14 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class TeamController extends Controller
 {
     use Response;
+
+    /**
+     * Create a new robot team
+     *
+     * @param   array  $request  [$request description]
+     *
+     * @return  json
+     */
     public function createTeam(CreateTeamRequest $request)
     {
         $team = Team::create([
@@ -27,9 +36,17 @@ class TeamController extends Controller
         ], 201);
     }
 
-    public function addRobotToTeam(Request $request)
+    /**
+     * Add a robot to a team
+     *
+     * @param   Request  $request  [$request description]
+     *
+     * @return  [type]             [return description]
+     */
+    public function addRobotToTeam(AddRobotToTeamRequest $request)
     {
-        // check if team already has three members
+
+        // check if team already has team members
         $count = RobotTeam::where(["team_id" => $request->input("team_id"), "manager_id" => auth()->user()->id])->count();
         if ($count === 5) {
             return $this->sendError("Unable to add new member to this team has limit of 5 robot members has been reached");
@@ -65,6 +82,13 @@ class TeamController extends Controller
         return $this->sendResponse("Robot added to team successfully.", [], 201);
     }
 
+    /**
+     * Get the members of a team
+     *
+     * @param   integer  $team_id  id of team
+     *
+     * @return  json
+     */
     public function getTeamMembers($team_id)
     {
         try {
