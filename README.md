@@ -11,7 +11,7 @@ To run this application, do the following
 ##### API documentation
 -  [Click here to view the API documentation](https://adenijiayocharles.gitbook.io/robo-dance-api/).
 
-##### API documentation
+##### Base URL
 -  https://robo-dance-api.herokuapp.com/api
 
 ##### Test
